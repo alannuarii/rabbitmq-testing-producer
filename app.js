@@ -25,7 +25,7 @@ const produceMessage = async () => {
             // Mengirim pesan ke exchange dengan routing key kosong
             channel.publish(exchange, routingKey, Buffer.from(payload));
             console.log(payload);
-        }, 600000);
+        }, 60000);
 
         // Menampilkan informasi bahwa aplikasi telah terhubung saat dijalankan
         console.log('Aplikasi berhasil terhubung ke RabbitMQ server.')
