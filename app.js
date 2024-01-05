@@ -18,14 +18,14 @@ const produceMessage = async () => {
         const routingKey = 'report'
 
         // Mendeklarasikan data yang akan dikirim
-        const payload = `Data ${new Date()}`;
+        const payload = `Message from server ${new Date()}`;
 
         // Mengirim data setiap 5 detik menggunakan setInterval
         setInterval(() => {
             // Mengirim pesan ke exchange dengan routing key kosong
             channel.publish(exchange, routingKey, Buffer.from(payload));
-            console.log('Data terkirim:', payload);
-        }, 120000);
+            console.log(payload);
+        }, 600000);
 
         // Menampilkan informasi bahwa aplikasi telah terhubung saat dijalankan
         console.log('Aplikasi berhasil terhubung ke RabbitMQ server.')
