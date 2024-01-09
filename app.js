@@ -2,7 +2,7 @@ const amqp = require('amqplib')
 require("dotenv").config();
 
 const produceMessage = async () => {
-    const rabbitmqUrl = `amqp://${process.env.USER}:${process.env.PASSWORD}@${process.env.URL}/keamanan`
+    const rabbitmqUrl = `amqp://${process.env.USER}:${process.env.PASSWORD}@${process.env.URL}/${process.env.VIRTUAL_HOST}`
 
     try {
         // Membuat koneksi ke RabbitMQ server
@@ -12,10 +12,10 @@ const produceMessage = async () => {
         const channel = await connection.createChannel()
 
         // Mendeklarasikan nama exchange
-        const exchange = 'patroli';
+        const exchange = `${process.env.EXCHANGE}`;
 
         // Mendeklarasikan routing key
-        const routingKey = 'report'
+        const routingKey = `${process.env.ROUTING_KEY}`
 
         // Mendeklarasikan data yang akan dikirim
         const payload = `Message from server ${new Date()}`;
@@ -25,7 +25,7 @@ const produceMessage = async () => {
             // Mengirim pesan ke exchange dengan routing key kosong
             channel.publish(exchange, routingKey, Buffer.from(payload));
             console.log(payload);
-        }, 600000);
+        }, 6000);
 
         // Menampilkan informasi bahwa aplikasi telah terhubung saat dijalankan
         console.log('Aplikasi berhasil terhubung ke RabbitMQ server.')
